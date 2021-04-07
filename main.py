@@ -1,7 +1,10 @@
 import os
+import sys
+import pathlib
 import discord
 import datetime
 from dotenv import load_dotenv
+from plugins import game_dev
 
 load_dotenv()
 # TODO: Turn into function and call only when needed.
@@ -10,8 +13,10 @@ SERVER = os.getenv('DISCORD_SERVER')
 DEVELOPER = os.getenv('DEVELOPER_NAME')
 PROJECT = os.getenv('PROJECT_NAME')
 DEV_PHASE = os.getenv('DEVELOPMENT_PHASE')
+LOG_PATH = os.getenv('LOG_PATH')
 
 client = discord.Client()
+
 
 @client.event
 async def on_ready():
@@ -20,6 +25,8 @@ async def on_ready():
             break
 
     print(f'The bot user: {client.user} \nConnected to: {server.name}')
+    game_dev.plugin_ready(client)
+
 
 @client.event
 async def on_message(message):
@@ -39,11 +46,23 @@ The next phase is: {DEV_PHASE} \n"""
         response = f"""Contact @{DEVELOPER} for more assistance"""
         print(command_log(message.author, message.content))
         await message.channel.send(response)
+    
+    try:
+        message_string = message.content
+        plugin_response = game_dev.plugin_message(message_string)
+        if plugin_response != None:
+            await message.channel.send(plugin_response)
+    except:
+        pass
+
 
 def command_log(author, command):
     time = datetime.datetime.now()
     time = time.strftime("%d/%m/%y %H:%M:%S")
+    log_path = LOG_PATH + "log."
     message = f"{time} Served {command} command to: {author}"
+    # with open(str(log_path))
     return message
+
 
 client.run(TOKEN)
