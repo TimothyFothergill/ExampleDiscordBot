@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from plugins import game_dev
 
 load_dotenv()
-# TODO: Turn into function and call only when needed.
+
 TOKEN = os.getenv('DISCORD_TOKEN')
 SERVER = os.getenv('DISCORD_SERVER')
 DEVELOPER = os.getenv('DEVELOPER_NAME')
@@ -49,8 +49,10 @@ The next phase is: {DEV_PHASE} \n"""
     
     try:
         message_string = message.content
-        plugin_response = game_dev.plugin_message(message_string)
+        message_author = message.author
+        plugin_response = game_dev.plugin_on_message(message_string, message_author)
         if plugin_response != None:
+            print(command_log(message.author, message_string))
             await message.channel.send(plugin_response)
     except:
         pass
