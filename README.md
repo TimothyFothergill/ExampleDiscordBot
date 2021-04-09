@@ -22,3 +22,4 @@ Docker Run
 `docker run discordbot` - You may want to append the `-d` flag after "run" (`docker run -d discordbot`) for detached mode, if you don't want to have a terminal dedicated to running the bot. If this is the case, you can shut down the Dockerised container with `docker stop ` and providing it the container id, followed by `docker rm ` and providing it the container id.
 
 # Plugins
+All extra functionality can be added to the `game_dev.py` file
