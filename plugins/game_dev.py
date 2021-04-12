@@ -21,12 +21,6 @@ def plugin_on_message(message, author):
 """
         return response
 
-    if str(message) == "!ashwasere":
-        response = """Are you sure?\n
-                    Are you certain?
-                    It's foobar'd!!!🤖"""
-        return response
-        
     if str(message) == "!reactme":
         response = """This is a command that is reacted to"""
         return response

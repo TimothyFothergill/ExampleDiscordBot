@@ -48,23 +48,23 @@ The next phase is: {DEV_PHASE} \n"""
     try:
         message_string = message.content
         message_author = message.author
-        plugin_response = game_dev.plugin_on_message(
+        plugin_response = loaded_plugins.plugin_on_message(
             message_string, message_author
         )
         if plugin_response is not None:
             print(command_log(message.author, message_string))
             await message.channel.send(plugin_response)
     except:
-        print("IGNORED: " + command_log(message.author, message_string))
         pass
 
 
 def command_log(author, command):
     time = datetime.datetime.now()
     time = time.strftime("%d/%m/%y %H:%M:%S")
-    # log_path = LOG_PATH + "log."
+    log_path = LOG_PATH + "discord_log.log"
     message = f"{time} Served {command} command to: {author}"
-    # with open(str(log_path))
+    with open(str(log_path), "a") as fw:
+        fw.write(str(message) + "\n") 
     return message
 
 

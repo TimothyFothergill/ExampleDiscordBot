@@ -1,4 +1,3 @@
-# from ../src import main.py
 import unittest
 
 
