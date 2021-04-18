@@ -45,6 +45,10 @@ The next phase is: {DEV_PHASE} \n"""
         print(command_log(message.author, message.content))
         await message.channel.send(response)
 
+    if message.content == "!feedback":
+        print(command_log(message.author, message.content))
+        await message.author.send("Good evening from GameDevBot! :eyes: ")
+
     try:
         message_string = message.content
         message_author = message.author
